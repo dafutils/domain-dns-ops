@@ -11,10 +11,7 @@ before_script:
     chmod +x travis_bintray_credentials.sh &&
     ./travis_bintray_credentials.sh
 script:
-    sbt clean test
-after_success:
-  - 'if [ "$TRAVIS_PULL_REQUEST" = "false"]; then sbt clean compile publish; fi'
-  - 'if [ "$TRAVIS_PULL_REQUEST" != "false" && "$TRAVIS_PULL_REQUEST_SLUG" = "$TRAVIS_REPO_SLUG" ]; then sbt clean compile publish; fi'
+  - sbt clean test publish
   - sbt clean coverage test coverageReport coverageAggregate codacyCoverage
 notifications:
   email: false
