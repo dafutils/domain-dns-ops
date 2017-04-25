@@ -12,6 +12,7 @@ before_script:
   - sbt dynverAssertVersion
 script:
   - sbt clean test publish #Publish artifacts
+after_success:
   - sbt clean coverage test coverageReport coverageAggregate codacyCoverage
 notifications:
   email: false
