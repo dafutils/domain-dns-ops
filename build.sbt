@@ -6,6 +6,7 @@ lazy val versionSettings = Seq(
       gitVersion.hasNoTags() || gitVersion.isDirty() || gitVersion.commitSuffix.distance > 0
     }
   },
+  version in ThisBuild ~= (_.replace('+', '-')),
 
   //  The 'version' setting is not set on purpose: its value is generated automatically by the sbt-dynver plugin
   //  based on the git tag/sha. Here we're just tacking on the maven-compatible snapshot suffix if needed
