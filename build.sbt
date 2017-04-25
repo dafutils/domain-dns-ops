@@ -5,16 +5,16 @@ lazy val versionSettings = Seq(
     dynverGitDescribeOutput.value forall { gitVersion =>
       gitVersion.hasNoTags() || gitVersion.isDirty() || gitVersion.commitSuffix.distance > 0
     }
-  },
+  }//,
 
   //  The 'version' setting is not set on purpose: its value is generated automatically by the sbt-dynver plugin
   //  based on the git tag/sha. Here we're just tacking on the maven-compatible snapshot suffix if needed
-  version := {
-    if (isSnapshot.value)
-      version.value + "-SNAPSHOT"
-    else
-      version.value
-  }
+//  version := {
+//    if (isSnapshot.value)
+//      version.value + "-SNAPSHOT"
+//    else
+//      version.value
+//  }
 )
 
 lazy val publicationSettings = Seq(
