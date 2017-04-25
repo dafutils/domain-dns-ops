@@ -69,10 +69,10 @@ lazy val javaProjectSettings = Seq (
 )
 
 lazy val domainDnsOps = (project in file("."))
+  .settings(javaProjectSettings)  
   .settings(projectMetadataSettings)
   .settings(versionSettings)
   .settings(publicationSettings)  
-  .settings(javaProjectSettings)  
   .settings(
 
     organization := "com.github.dafutils",
