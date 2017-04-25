@@ -11,6 +11,7 @@ before_script:
     ./travis_bintray_credentials.sh
   - sbt dynverAssertVersion
 script:
-    sbt clean test publish #Publish artifacts
+  - sbt clean test publish #Publish artifacts
+  - sbt clean coverage test coverageReport coverageAggregate codacyCoverage
 notifications:
   email: false
