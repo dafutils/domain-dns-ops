@@ -11,6 +11,6 @@ before_script:
     ./travis_bintray_credentials.sh
   - sbt dynverAssertVersion
 script:
-    sbt ++$TRAVIS_SCALA_VERSION clean test publish #Publish artifacts
+    sbt clean test publish #Publish artifacts
 notifications:
   email: false
