@@ -86,6 +86,3 @@ lazy val domainDnsOps = (project in file("."))
       "com.novocode" % "junit-interface" % "0.11" % Test
     )
   )
-
-
-
