@@ -1,4 +1,4 @@
-package com.github.dafutils.dns.records;
+package dns.records;
 
 /**
  * As described here:

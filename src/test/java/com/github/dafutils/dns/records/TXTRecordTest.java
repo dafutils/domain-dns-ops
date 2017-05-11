@@ -1,4 +1,4 @@
-package com.github.dafutils.dns.records;
+package dns.records;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

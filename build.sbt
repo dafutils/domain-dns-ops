@@ -68,6 +68,8 @@ lazy val javaProjectSettings = Seq (
   autoScalaLibrary := false
 )
 
+lazy val model = project in file("./model")
+
 lazy val domainDnsOps = (project in file("."))
   .settings(javaProjectSettings)  
   .settings(projectMetadataSettings)
@@ -85,4 +87,4 @@ lazy val domainDnsOps = (project in file("."))
       "org.assertj" % "assertj-core" % "3.6.2" % Test,
       "com.novocode" % "junit-interface" % "0.11" % Test
     )
-  )
+  ).dependsOn(model)
