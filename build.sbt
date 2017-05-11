@@ -49,8 +49,8 @@ lazy val projectMetadataSettings = Seq(
   licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.txt")),
   scmInfo := Some(
     ScmInfo(
-      browseUrl = url("https://github.com/EmilDafinov/scala-ad-sdk"),
-      connection = "scm:git:git@github.com:EmilDafinov/scala-ad-sdk.git"
+      browseUrl = url("https://github.com/dafutils/domain-dns-ops"),
+      connection = "scm:git:git@github.com:dafutils/domain-dns-ops.git"
     )
   ),
   developers := List(
@@ -77,22 +77,23 @@ lazy val commonProjectSettings =
                projectMetadataSettings ++
                versionSettings ++
                publicationSettings ++
-               jacoco.settings
+               jacoco.settings :+ 
+               (libraryDependencies ++= commonTestDependencies)
 
-lazy val model = (project in file("./model"))
-  .settings(
-    commonProjectSettings,
-    libraryDependencies ++= commonTestDependencies
-  )
+lazy val model = project
+  .settings(commonProjectSettings)
 
-lazy val api = (project in file("./api"))
+lazy val api = project 
   .dependsOn(model)
+  .settings(commonProjectSettings)  
+
+lazy val godaddy = project
+  .dependsOn(api)
+  .settings(commonProjectSettings)
 
 lazy val domainDnsOps = (project in file("."))
+  .dependsOn(model, api, godaddy)
   .settings(
     commonProjectSettings,
-    
-    name := "domain-dns-ops",
-
-    libraryDependencies ++= commonTestDependencies
-  ).dependsOn(model, api)
+    name := "domain-dns-ops"
+  )
