@@ -72,7 +72,8 @@ lazy val domainDnsOps = (project in file("."))
   .settings(javaProjectSettings)  
   .settings(projectMetadataSettings)
   .settings(versionSettings)
-  .settings(publicationSettings)  
+  .settings(publicationSettings)
+  .settings(jacoco.settings)
   .settings(
 
     organization := "com.github.dafutils",
@@ -85,6 +86,3 @@ lazy val domainDnsOps = (project in file("."))
       "com.novocode" % "junit-interface" % "0.11" % Test
     )
   )
-
-
-
