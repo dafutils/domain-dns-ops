@@ -81,7 +81,10 @@ lazy val commonProjectSettings =
                (libraryDependencies ++= unitTestDependencies)
 
 lazy val model = project
-  .settings(commonProjectSettings)
+  .settings(
+    commonProjectSettings,
+    libraryDependencies += lombok
+  )
 
 lazy val api = project 
   .dependsOn(model)
@@ -91,7 +94,7 @@ lazy val godaddy = project
   .dependsOn(api)
   .settings(
     commonProjectSettings,
-    libraryDependencies += wiremock
+    libraryDependencies ++= Seq(unirest, gson, guava, wiremock)
   )
 
 lazy val domainDnsOps = (project in file("."))

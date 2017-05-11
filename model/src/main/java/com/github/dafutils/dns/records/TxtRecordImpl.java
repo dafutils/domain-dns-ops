@@ -2,8 +2,6 @@ package com.github.dafutils.dns.records;
 
 import static java.util.Collections.unmodifiableSet;
 
-import java.util.Collections;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -14,11 +12,11 @@ import java.util.Set;
 public class TxtRecordImpl implements TxtRecord {
 
 	private final String destinationDomain;
-	private final long ttl;
+	private final int ttl;
 	private final Set<TxtRecordItem> text;
 
 	TxtRecordImpl(String destinationDomain,
-				  long ttl,
+				  int ttl,
 				  Set<TxtRecordItem> text) {
 		this.destinationDomain = destinationDomain;
 		this.ttl = ttl;
@@ -26,12 +24,12 @@ public class TxtRecordImpl implements TxtRecord {
 	}
 
 	@Override
-	public String destinationDomain() {
+	public String name() {
 		return destinationDomain;
 	}
 
 	@Override
-	public long ttl() {
+	public int ttl() {
 		return ttl;
 	}
 

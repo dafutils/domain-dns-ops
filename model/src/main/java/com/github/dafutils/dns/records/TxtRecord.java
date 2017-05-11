@@ -4,9 +4,9 @@ import java.util.Set;
 
 public interface TxtRecord {
 
-	String destinationDomain();
+	String name();
 
-	long ttl();
+	int ttl();
 
 	String clazz();
 
@@ -15,7 +15,7 @@ public interface TxtRecord {
 	String type();
 
 	static TxtRecord of(String destinationDomain,
-						long ttl,
+						int ttl,
 						Set<TxtRecordItem> text) {
 
 		return new TxtRecordImpl(destinationDomain, ttl, text);

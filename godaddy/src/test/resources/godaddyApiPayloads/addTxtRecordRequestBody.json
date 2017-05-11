@@ -1,0 +1,8 @@
+[
+  {
+    "type": "TXT",
+    "name": "joe",
+    "data": "key=value",
+    "ttl": 3600
+  }
+]
