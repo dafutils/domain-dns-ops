@@ -1,4 +1,5 @@
 import sbt.url
+import Dependencies._
 
 lazy val versionSettings = Seq(
   isSnapshot := {
@@ -68,23 +69,32 @@ lazy val javaProjectSettings = Seq (
   autoScalaLibrary := false
 )
 
-lazy val model = project in file("./model")
+
+lazy val model = (project in file("./model"))
+  .settings(
+    javaProjectSettings,
+    projectMetadataSettings,
+    versionSettings,
+    publicationSettings,
+    jacoco.settings,
+    libraryDependencies ++= commonTestDependencies
+  )
+
+lazy val api = (project in file("./api"))
+  .dependsOn(model)
 
 lazy val domainDnsOps = (project in file("."))
-  .settings(javaProjectSettings)  
-  .settings(projectMetadataSettings)
-  .settings(versionSettings)
-  .settings(publicationSettings)
-  .settings(jacoco.settings)
   .settings(
+    javaProjectSettings,  
+    projectMetadataSettings,
+    versionSettings,
+    publicationSettings,
+    jacoco.settings
+  ).settings(
 
     organization := "com.github.dafutils",
     name := "domain-dns-ops",
     testOptions += Tests.Argument(TestFrameworks.JUnit, "-q", "-v"),
 
-    libraryDependencies ++= Seq(
-      "org.mockito" % "mockito-core" % "2.7.22" % Test,
-      "org.assertj" % "assertj-core" % "3.6.2" % Test,
-      "com.novocode" % "junit-interface" % "0.11" % Test
-    )
-  ).dependsOn(model)
+    libraryDependencies ++= commonTestDependencies
+  ).dependsOn(model, api)

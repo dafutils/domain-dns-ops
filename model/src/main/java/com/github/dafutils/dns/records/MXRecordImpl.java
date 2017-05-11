@@ -1,4 +1,4 @@
-package dns.records;
+package com.github.dafutils.dns.records;
 
 class MXRecordImpl implements MXRecord {
 
