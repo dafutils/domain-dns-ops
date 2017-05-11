@@ -45,6 +45,7 @@ lazy val publicationSettings = Seq(
 )
 
 lazy val projectMetadataSettings = Seq(
+  organization := "com.github.dafutils",
   licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.txt")),
   scmInfo := Some(
     ScmInfo(
@@ -66,17 +67,21 @@ lazy val javaProjectSettings = Seq (
   // Do not append Scala versions to the generated artifacts
   crossPaths := false,
   // This forbids including Scala related libraries into the dependency
-  autoScalaLibrary := false
+  autoScalaLibrary := false,
+  //Enable JUnit in the build 
+  testOptions += Tests.Argument(TestFrameworks.JUnit, "-q", "-v")
 )
 
+lazy val commonProjectSettings = 
+               javaProjectSettings ++ 
+               projectMetadataSettings ++
+               versionSettings ++
+               publicationSettings ++
+               jacoco.settings
 
 lazy val model = (project in file("./model"))
   .settings(
-    javaProjectSettings,
-    projectMetadataSettings,
-    versionSettings,
-    publicationSettings,
-    jacoco.settings,
+    commonProjectSettings,
     libraryDependencies ++= commonTestDependencies
   )
 
@@ -85,16 +90,9 @@ lazy val api = (project in file("./api"))
 
 lazy val domainDnsOps = (project in file("."))
   .settings(
-    javaProjectSettings,  
-    projectMetadataSettings,
-    versionSettings,
-    publicationSettings,
-    jacoco.settings
-  ).settings(
-
-    organization := "com.github.dafutils",
+    commonProjectSettings,
+    
     name := "domain-dns-ops",
-    testOptions += Tests.Argument(TestFrameworks.JUnit, "-q", "-v"),
 
     libraryDependencies ++= commonTestDependencies
   ).dependsOn(model, api)
