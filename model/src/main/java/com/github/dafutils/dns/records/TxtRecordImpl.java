@@ -1,25 +1,28 @@
 package com.github.dafutils.dns.records;
 
+import static java.util.Collections.unmodifiableSet;
+
 import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * As described here https://en.wikipedia.org/wiki/TXT_record
  * name  ttl  class   type     text
  * joe        IN      TXT    "Located in a black hole" "Likely to be eaten by a grue"
  */
-public class TXTRecordImpl implements TXTRecord {
+public class TxtRecordImpl implements TxtRecord {
 
 	private final String destinationDomain;
 	private final long ttl;
-	private final Map<String, String> text;
+	private final Set<TxtRecordItem> text;
 
-	TXTRecordImpl(String destinationDomain,
+	TxtRecordImpl(String destinationDomain,
 				  long ttl,
-				  Map<String, String> text) {
+				  Set<TxtRecordItem> text) {
 		this.destinationDomain = destinationDomain;
 		this.ttl = ttl;
-		this.text = Collections.unmodifiableMap(text);
+		this.text = unmodifiableSet(text);
 	}
 
 	@Override
@@ -38,12 +41,12 @@ public class TXTRecordImpl implements TXTRecord {
 	}
 
 	@Override
-	public Map<String, String> text() {
+	public Set<TxtRecordItem> text() {
 		return text;
 	}
 
 	@Override
-	public String rr() {
+	public String type() {
 		return "TXT";
 	}
 }

@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.github.dafutils.dns.operations.DomainOperationsService;
 import com.github.dafutils.dns.records.MXRecord;
-import com.github.dafutils.dns.records.TXTRecord;
+import com.github.dafutils.dns.records.TxtRecord;
 
 public class GoDaddyDomainService implements DomainOperationsService {
 	@Override
@@ -13,7 +13,7 @@ public class GoDaddyDomainService implements DomainOperationsService {
 	}
 
 	@Override
-	public void addTextRecord(String domainName, TXTRecord record) {
+	public void addTextRecord(String domainName, TxtRecord record) {
 
 	}
 }

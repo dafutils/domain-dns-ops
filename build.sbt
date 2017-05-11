@@ -63,7 +63,7 @@ lazy val projectMetadataSettings = Seq(
   )
 )
 
-lazy val javaProjectSettings = Seq (
+lazy val javaProjectSettings = Seq(
   // Do not append Scala versions to the generated artifacts
   crossPaths := false,
   // This forbids including Scala related libraries into the dependency
@@ -78,7 +78,7 @@ lazy val commonProjectSettings =
                versionSettings ++
                publicationSettings ++
                jacoco.settings :+ 
-               (libraryDependencies ++= commonTestDependencies)
+               (libraryDependencies ++= unitTestDependencies)
 
 lazy val model = project
   .settings(commonProjectSettings)
@@ -89,11 +89,10 @@ lazy val api = project
 
 lazy val godaddy = project
   .dependsOn(api)
-  .settings(commonProjectSettings)
-
-lazy val domainDnsOps = (project in file("."))
-  .dependsOn(model, api, godaddy)
   .settings(
     commonProjectSettings,
-    name := "domain-dns-ops"
+    libraryDependencies += wiremock
   )
+
+lazy val domainDnsOps = (project in file("."))
+  .aggregate(model, api, godaddy)

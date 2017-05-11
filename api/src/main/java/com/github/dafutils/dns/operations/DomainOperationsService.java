@@ -3,7 +3,7 @@ package com.github.dafutils.dns.operations;
 import java.util.Set;
 
 import com.github.dafutils.dns.records.MXRecord;
-import com.github.dafutils.dns.records.TXTRecord;
+import com.github.dafutils.dns.records.TxtRecord;
 
 /**
  * Implementations of this service need to be able to perform the declared operations on a domain using 
@@ -13,5 +13,5 @@ public interface DomainOperationsService {
 
 	void configureDomainEmailRouting(String domainName, Set<MXRecord> mxRecords);
 
-	void addTextRecord(String domainName, TXTRecord record);
+	void addTextRecord(String domainName, TxtRecord record);
 }
