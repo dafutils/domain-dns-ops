@@ -1,0 +1,6 @@
+{
+  "name": "example.com",
+  "type": "TXT",
+  "data": "key=value",
+  "ttl": 3600
+}

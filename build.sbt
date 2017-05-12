@@ -97,5 +97,12 @@ lazy val godaddy = project
     libraryDependencies ++= Seq(unirest, gson, wiremock)
   )
 
+lazy val hostway = project
+  .dependsOn(api)
+  .settings(
+    commonProjectSettings,
+    libraryDependencies ++= Seq(unirest, gson, wiremock)
+  )  
+
 lazy val domainDnsOps = (project in file("."))
   .aggregate(model, api, godaddy)

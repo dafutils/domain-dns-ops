@@ -83,7 +83,7 @@ public class GoDaddyDomainDnsClientTest {
 	public void testAddTextRecord_whenRecordWithNoDestinationDomainIsPassed_AtSignIsReplacedInstead() throws Exception {
 		//Given
 		String testDomainName = "example.com";
-		TxtRecord testTxtRecord = TxtRecord.of("", 3600, singletonList("key=value"));//givenATxtRecordWithOneItem("", "key", "value");
+		TxtRecord testTxtRecord = TxtRecord.of("", 3600, singletonList("key=value"));
 		String addRecordUrl = format("/v1/domains/%s/records", testDomainName);
 		String expectedShopperId = "someString";
 		when(shopperIdSupplier.get()).thenReturn(expectedShopperId);
