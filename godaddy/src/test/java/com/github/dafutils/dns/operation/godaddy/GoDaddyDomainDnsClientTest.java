@@ -28,8 +28,6 @@ import com.github.dafutils.dns.operations.DomainDnsOperationsClient;
 import com.github.dafutils.dns.records.TxtRecord;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.google.common.io.Resources;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GoDaddyDomainDnsClientTest {
@@ -39,8 +37,6 @@ public class GoDaddyDomainDnsClientTest {
 	@Mock
 	private Supplier<String> shopperIdSupplier;
 
-	private Gson gson = new GsonBuilder().create();
-
 	@Rule
 	public WireMockRule wireMock = new WireMockRule(
 			options().dynamicPort()
@@ -49,7 +45,7 @@ public class GoDaddyDomainDnsClientTest {
 	@Before
 	public void setUp() throws Exception {
 		String goDaddyBaseUrl = format("http://localhost:%s", wireMock.port());
-		testedService = new GoDaddyDomainDnsClient(goDaddyBaseUrl, shopperIdSupplier, gson);
+		testedService =  GoDaddyDomainOpsFactory.createClientFor(goDaddyBaseUrl, shopperIdSupplier);
 	}
 
 	@Test

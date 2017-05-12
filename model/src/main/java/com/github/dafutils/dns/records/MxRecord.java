@@ -7,7 +7,7 @@ package com.github.dafutils.dns.records;
 public interface MxRecord {
 	String destinationDomain();
 
-	long ttl();
+	int ttlInSeconds();
 
 	String clazz();
 
@@ -17,7 +17,7 @@ public interface MxRecord {
 
 	String type();
 
-	static MxRecord of(String destinationDomain, long ttl, int preferenceNumber, String mailServerName) {
+	static MxRecord of(String destinationDomain, int ttl, int preferenceNumber, String mailServerName) {
 		return new MxRecordImpl(destinationDomain, ttl, preferenceNumber, mailServerName);
 	}
 }

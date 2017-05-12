@@ -3,12 +3,12 @@ package com.github.dafutils.dns.records;
 final class MxRecordImpl implements MxRecord {
 
 	private final String destinationDomain;
-	private final long ttl;
+	private final int ttl;
 	private final int preferenceNumber;
 	private final String mailServerName;
 
 	public MxRecordImpl(String destinationDomain,
-				 long ttl,
+				 int ttl,
 				 int preferenceNumber,
 				 String mailServerName) {
 
@@ -24,7 +24,7 @@ final class MxRecordImpl implements MxRecord {
 	}
 
 	@Override
-	public long ttl() {
+	public int ttlInSeconds() {
 		return ttl;
 	}
 

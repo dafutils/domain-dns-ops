@@ -10,7 +10,7 @@ public class MxRecordTest {
 	public void testOf() throws Exception {
 		//Given
 		String expectedDestinationDomain = "example.com";
-		long expectedTtl = 3600;
+		int expectedTtl = 3600;
 		int expectedPreferenceNumber = 1;
 		String expectedMailServerName = "test.example.com";
 
@@ -22,6 +22,6 @@ public class MxRecordTest {
 		assertThat(generatedRecord.clazz()).isEqualTo("IN");
 		assertThat(generatedRecord.mailServerName()).isEqualTo(expectedMailServerName);
 		assertThat(generatedRecord.preferenceNumber()).isEqualTo(expectedPreferenceNumber);
-		assertThat(generatedRecord.ttl()).isEqualTo(expectedTtl);
+		assertThat(generatedRecord.ttlInSeconds()).isEqualTo(expectedTtl);
 	}
 }
