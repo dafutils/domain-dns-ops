@@ -26,7 +26,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.github.dafutils.dns.operations.DomainOperationsService;
+import com.github.dafutils.dns.operations.DomainDnsOperationsClient;
 import com.github.dafutils.dns.records.TxtRecord;
 import com.github.dafutils.dns.records.TxtRecordItem;
 import com.github.dafutils.dns.records.TxtRecordItemImpl;
@@ -38,7 +38,7 @@ import com.google.gson.GsonBuilder;
 @RunWith(MockitoJUnitRunner.class)
 public class GoDaddyDomainServiceTest {
 
-	private DomainOperationsService testedService;
+	private DomainDnsOperationsClient testedService;
 
 	@Mock
 	private Supplier<String> shopperIdSupplier;
@@ -53,7 +53,7 @@ public class GoDaddyDomainServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		String goDaddyBaseUrl = format("http://localhost:%s", wireMock.port());
-		testedService = new GoDaddyDomainService(goDaddyBaseUrl, shopperIdSupplier, gson);
+		testedService = new GoDaddyDomainDnsClient(goDaddyBaseUrl, shopperIdSupplier, gson);
 	}
 
 	@Test

@@ -11,20 +11,20 @@ import java.util.function.Supplier;
 import lombok.SneakyThrows;
 
 import com.github.dafutils.dns.operation.godaddy.model.DNSRecord;
-import com.github.dafutils.dns.operations.DomainOperationsService;
+import com.github.dafutils.dns.operations.DomainDnsOperationsClient;
 import com.github.dafutils.dns.records.MXRecord;
 import com.github.dafutils.dns.records.TxtRecord;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mashape.unirest.http.Unirest;
 
-public class GoDaddyDomainService implements DomainOperationsService {
+public class GoDaddyDomainDnsClient implements DomainDnsOperationsClient {
 
 	private final String goDaddyBaseUrl;
 	private final Supplier<String> shopperIdSupplier;
 	private final Gson gson;
 
-	public GoDaddyDomainService(String goDaddyBaseUrl, Supplier<String> shopperIdSupplier, Gson gson) {
+	public GoDaddyDomainDnsClient(String goDaddyBaseUrl, Supplier<String> shopperIdSupplier, Gson gson) {
 		this.goDaddyBaseUrl = goDaddyBaseUrl;
 		this.shopperIdSupplier = shopperIdSupplier;
 		this.gson = gson;

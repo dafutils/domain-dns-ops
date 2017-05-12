@@ -9,7 +9,7 @@ import com.github.dafutils.dns.records.TxtRecord;
  * Implementations of this service need to be able to perform the declared operations on a domain using 
  * a for a concrete domain hosting service.
  */
-public interface DomainOperationsService {
+public interface DomainDnsOperationsClient {
 
 	void configureDomainEmailRouting(String domainName, Set<MXRecord> mxRecords);
 
