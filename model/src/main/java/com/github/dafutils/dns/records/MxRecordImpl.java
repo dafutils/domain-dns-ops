@@ -1,13 +1,13 @@
 package com.github.dafutils.dns.records;
 
-class MXRecordImpl implements MXRecord {
+final class MxRecordImpl implements MxRecord {
 
 	private final String destinationDomain;
 	private final long ttl;
 	private final int preferenceNumber;
 	private final String mailServerName;
 
-	MXRecordImpl(String destinationDomain,
+	public MxRecordImpl(String destinationDomain,
 				 long ttl,
 				 int preferenceNumber,
 				 String mailServerName) {

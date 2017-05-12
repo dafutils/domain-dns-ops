@@ -2,7 +2,7 @@ package com.github.dafutils.dns.operations;
 
 import java.util.Set;
 
-import com.github.dafutils.dns.records.MXRecord;
+import com.github.dafutils.dns.records.MxRecord;
 import com.github.dafutils.dns.records.TxtRecord;
 
 /**
@@ -11,7 +11,7 @@ import com.github.dafutils.dns.records.TxtRecord;
  */
 public interface DomainDnsOperationsClient {
 
-	void configureDomainEmailRouting(String domainName, Set<MXRecord> mxRecords);
+	void configureDomainEmailRouting(String domainName, Set<MxRecord> mxRecords);
 
 	void addTextRecord(String domainName, TxtRecord record);
 }

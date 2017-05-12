@@ -3,7 +3,7 @@ package com.github.dafutils.dns.records;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode
-public class TxtRecordItemImpl implements TxtRecordItem {
+public final class TxtRecordItemImpl implements TxtRecordItem {
 	private final String key;
 	private final String value;
 

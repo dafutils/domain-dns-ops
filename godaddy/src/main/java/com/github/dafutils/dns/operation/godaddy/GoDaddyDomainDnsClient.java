@@ -10,9 +10,8 @@ import java.util.function.Supplier;
 
 import lombok.SneakyThrows;
 
-import com.github.dafutils.dns.operation.godaddy.model.DNSRecord;
 import com.github.dafutils.dns.operations.DomainDnsOperationsClient;
-import com.github.dafutils.dns.records.MXRecord;
+import com.github.dafutils.dns.records.MxRecord;
 import com.github.dafutils.dns.records.TxtRecord;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -31,7 +30,7 @@ public class GoDaddyDomainDnsClient implements DomainDnsOperationsClient {
 	}
 
 	@Override
-	public void configureDomainEmailRouting(String domainName, Set<MXRecord> mxRecords) {
+	public void configureDomainEmailRouting(String domainName, Set<MxRecord> mxRecords) {
 
 	}
 
@@ -55,17 +54,16 @@ public class GoDaddyDomainDnsClient implements DomainDnsOperationsClient {
 		);
 
 		Unirest
-				.patch(format("%s/v1/domains/%s/records", goDaddyBaseUrl, domainName))
-				.header("X-Shopper-Id", shopperIdSupplier.get())
-				.body(serializedRecords)
-				.asString();
+			.patch(format("%s/v1/domains/%s/records", goDaddyBaseUrl, domainName))
+			.header("X-Shopper-Id", shopperIdSupplier.get())
+			.body(serializedRecords)
+			.asString();
 	}
 
 	private String extractText(TxtRecord record) {
-		return record.text().stream()
-				.map(recordItem ->
-						format("%s=%s", recordItem.key(), recordItem.value())
-				).collect(joining(" "));
+		return record.text()
+				.stream()
+				.collect(joining(" "));
 	}
 
 	private String extractRecordName(TxtRecord record) {

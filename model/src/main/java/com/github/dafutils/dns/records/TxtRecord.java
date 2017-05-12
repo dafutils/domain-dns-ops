@@ -1,6 +1,6 @@
 package com.github.dafutils.dns.records;
 
-import java.util.Set;
+import java.util.List;
 
 public interface TxtRecord {
 
@@ -10,14 +10,14 @@ public interface TxtRecord {
 
 	String clazz();
 
-	Set<TxtRecordItem> text();
+	List<String> text();
 
 	String type();
 
-	static TxtRecord of(String destinationDomain,
+	static TxtRecord of(String name,
 						int ttl,
-						Set<TxtRecordItem> text) {
+						List<String> text) {
 
-		return new TxtRecordImpl(destinationDomain, ttl, text);
+		return new TxtRecordImpl(name, ttl, text);
 	}
 }

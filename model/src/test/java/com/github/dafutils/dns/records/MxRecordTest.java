@@ -2,10 +2,9 @@ package com.github.dafutils.dns.records;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
-public class MXRecordTest {
+public class MxRecordTest {
 
 	@Test
 	public void testOf() throws Exception {
@@ -16,7 +15,7 @@ public class MXRecordTest {
 		String expectedMailServerName = "test.example.com";
 
 		//When
-		MXRecord generatedRecord = MXRecord.of(expectedDestinationDomain, expectedTtl, expectedPreferenceNumber, expectedMailServerName);
+		MxRecord generatedRecord = MxRecord.of(expectedDestinationDomain, expectedTtl, expectedPreferenceNumber, expectedMailServerName);
 
 		//Then
 		assertThat(generatedRecord.destinationDomain()).isEqualTo(expectedDestinationDomain);

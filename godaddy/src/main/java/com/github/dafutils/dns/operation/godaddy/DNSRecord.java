@@ -1,4 +1,4 @@
-package com.github.dafutils.dns.operation.godaddy.model;
+package com.github.dafutils.dns.operation.godaddy;
 
 import lombok.Builder;
 import lombok.Value;
@@ -8,7 +8,7 @@ import lombok.Value;
  */
 @Value
 @Builder
-public class DNSRecord {
+class DNSRecord {
 	String type;
 	String name;
 	String data;

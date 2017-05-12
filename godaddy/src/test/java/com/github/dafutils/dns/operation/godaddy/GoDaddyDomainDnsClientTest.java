@@ -11,12 +11,10 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
 import static com.google.common.io.Resources.getResource;
 import static java.lang.String.format;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Collections.singletonList;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.function.Supplier;
 
 import org.junit.Before;
@@ -28,15 +26,13 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.github.dafutils.dns.operations.DomainDnsOperationsClient;
 import com.github.dafutils.dns.records.TxtRecord;
-import com.github.dafutils.dns.records.TxtRecordItem;
-import com.github.dafutils.dns.records.TxtRecordItemImpl;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.google.common.io.Resources;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GoDaddyDomainServiceTest {
+public class GoDaddyDomainDnsClientTest {
 
 	private DomainDnsOperationsClient testedService;
 
@@ -60,33 +56,33 @@ public class GoDaddyDomainServiceTest {
 	public void testAddTextRecord_whenRecordPassed_itMatchesExpectedFormat() throws Exception {
 		//Given
 		String testDomainName = "example.com";
-		TxtRecord testTxtRecord = givenATxtRecordWithOneItem("joe","key", "value");
+		TxtRecord testTxtRecord = TxtRecord.of("joe", 3600, singletonList("key=value"));
 		String addRecordUrl = format("/v1/domains/%s/records", testDomainName);
 		String expectedShopperId = "someString";
 		when(shopperIdSupplier.get()).thenReturn(expectedShopperId);
 
 		String expectedRequestPayload = givenRequestPayload("godaddyApiPayloads/addTxtRecordRequestBody.json");
 
-		givenThat( 
-			patch(urlEqualTo(addRecordUrl))
-		.willReturn(
-			aResponse().withStatus(200)
-		));
+		givenThat(
+				patch(urlEqualTo(addRecordUrl))
+						.willReturn(
+								aResponse().withStatus(200)
+						));
 
 		//When
 		testedService.addTextRecord(testDomainName, testTxtRecord);
 
 		//Then
 		verify(
-			patchRequestedFor(urlEqualTo(addRecordUrl))
-			.withRequestBody(equalToJson(expectedRequestPayload)));
+				patchRequestedFor(urlEqualTo(addRecordUrl))
+						.withRequestBody(equalToJson(expectedRequestPayload)));
 	}
 
 	@Test
 	public void testAddTextRecord_whenRecordWithNoDestinationDomainIsPassed_AtSignIsReplacedInstead() throws Exception {
 		//Given
 		String testDomainName = "example.com";
-		TxtRecord testTxtRecord = givenATxtRecordWithOneItem("", "key", "value");
+		TxtRecord testTxtRecord = TxtRecord.of("", 3600, singletonList("key=value"));//givenATxtRecordWithOneItem("", "key", "value");
 		String addRecordUrl = format("/v1/domains/%s/records", testDomainName);
 		String expectedShopperId = "someString";
 		when(shopperIdSupplier.get()).thenReturn(expectedShopperId);
@@ -107,17 +103,21 @@ public class GoDaddyDomainServiceTest {
 				patchRequestedFor(urlEqualTo(addRecordUrl))
 						.withRequestBody(equalToJson(expectedRequestPayload)));
 	}
-	
-	private String givenRequestPayload(String resourcePath) throws IOException {
-		return Resources.toString(getResource(resourcePath), UTF_8);
+
+	@Test
+	public void testConfigureDomainEmailRouting_whenASetOfMxRecordsIsToBeSetTo_theCorrespondingCallIsMAdeToGoDaddy() throws Exception {
+		//Given
+//		String testDomainName = "example.com";
+//		new MxRe();
+//		List<MxRecord> testMxRecordsToSet = ;
+//
+//		//When
+//		testedService.configureDomainEmailRouting(testDomainName, testMxRecords);
+//		
+//		//Then
 	}
 
-	private TxtRecord givenATxtRecordWithOneItem(String destinationDomain, String itemKey, String itemValue) {
-		TxtRecordItem txtRecordItem = new TxtRecordItemImpl(itemKey, itemValue);
-
-		Set<TxtRecordItem> items = new HashSet<>();
-		items.add(txtRecordItem);
-
-		return TxtRecord.of(destinationDomain, 3600, Collections.unmodifiableSet(items));
+	private String givenRequestPayload(String resourcePath) throws IOException {
+		return Resources.toString(getResource(resourcePath), UTF_8);
 	}
 }
