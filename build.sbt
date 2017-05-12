@@ -94,7 +94,7 @@ lazy val godaddy = project
   .dependsOn(api)
   .settings(
     commonProjectSettings,
-    libraryDependencies ++= Seq(unirest, gson, guava, wiremock)
+    libraryDependencies ++= Seq(unirest, gson, wiremock)
   )
 
 lazy val domainDnsOps = (project in file("."))
