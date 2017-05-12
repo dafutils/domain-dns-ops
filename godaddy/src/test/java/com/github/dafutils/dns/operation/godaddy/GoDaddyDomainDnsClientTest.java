@@ -5,6 +5,8 @@ import static com.github.tomakehurst.wiremock.client.WireMock.equalToJson;
 import static com.github.tomakehurst.wiremock.client.WireMock.givenThat;
 import static com.github.tomakehurst.wiremock.client.WireMock.patch;
 import static com.github.tomakehurst.wiremock.client.WireMock.patchRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.put;
+import static com.github.tomakehurst.wiremock.client.WireMock.putRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
@@ -15,6 +17,7 @@ import static java.util.Collections.singletonList;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.util.Set;
 import java.util.function.Supplier;
 
 import org.junit.Before;
@@ -25,8 +28,10 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.github.dafutils.dns.operations.DomainDnsOperationsClient;
+import com.github.dafutils.dns.records.MxRecordImpl;
 import com.github.dafutils.dns.records.TxtRecord;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import com.google.common.collect.Sets;
 import com.google.common.io.Resources;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -45,7 +50,7 @@ public class GoDaddyDomainDnsClientTest {
 	@Before
 	public void setUp() throws Exception {
 		String goDaddyBaseUrl = format("http://localhost:%s", wireMock.port());
-		testedService =  GoDaddyDomainOpsFactory.createClientFor(goDaddyBaseUrl, shopperIdSupplier);
+		testedService = GoDaddyDomainOpsFactory.createClientFor(goDaddyBaseUrl, shopperIdSupplier);
 	}
 
 	@Test
@@ -103,14 +108,28 @@ public class GoDaddyDomainDnsClientTest {
 	@Test
 	public void testConfigureDomainEmailRouting_whenASetOfMxRecordsIsToBeSetTo_theCorrespondingCallIsMAdeToGoDaddy() throws Exception {
 		//Given
-//		String testDomainName = "example.com";
-//		new MxRe();
-//		List<MxRecord> testMxRecordsToSet = ;
-//
-//		//When
-//		testedService.configureDomainEmailRouting(testDomainName, testMxRecords);
-//		
-//		//Then
+		String testDomainName = "example.com";
+		MxRecordImpl record1 = new MxRecordImpl("something", 600, 1, "aspmx.l.google.com");
+		MxRecordImpl record2 = new MxRecordImpl("something", 1200, 5, "alt1.aspmx.l.google.com");
+		MxRecordImpl record3 = new MxRecordImpl("something", 3600, 10, "alt2.aspmx.l.google.com");
+		Set<MxRecordImpl> testMxRecordsToSet = Sets.newHashSet(record1, record2, record3);
+		String replaceMxRecordsUrl = format("/v1/domains/%s/records/MX", testDomainName);
+
+		givenThat(
+			put(urlEqualTo(replaceMxRecordsUrl))
+				.willReturn(aResponse().withStatus(200))
+		);
+
+		String expectedRequestPayload = givenRequestPayload("godaddyApiPayloads/replaceMxRecordsRequestBody.json");
+
+		//When
+		testedService.configureDomainEmailRouting(testDomainName, testMxRecordsToSet);
+
+		//Then
+		verify(
+				putRequestedFor(urlEqualTo(replaceMxRecordsUrl))
+						.withRequestBody(equalToJson(expectedRequestPayload))
+		);
 	}
 
 	private String givenRequestPayload(String resourcePath) throws IOException {

@@ -1,6 +1,6 @@
 package com.github.dafutils.dns.records;
 
-final class MxRecordImpl implements MxRecord {
+public final class MxRecordImpl implements MxRecord {
 
 	private final String destinationDomain;
 	private final int ttl;

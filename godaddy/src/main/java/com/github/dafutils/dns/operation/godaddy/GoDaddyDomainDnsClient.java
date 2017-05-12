@@ -39,8 +39,9 @@ class GoDaddyDomainDnsClient implements DomainDnsOperationsClient {
 		this.txtRecordToGoDaddyFormat = txtRecordToGoDaddyFormat;
 	}
 
+	@SneakyThrows
 	@Override
-	public void configureDomainEmailRouting(String domainName, Set<MxRecord> mxRecords) {
+	public void configureDomainEmailRouting(String domainName, Set<? extends MxRecord> mxRecords) {
 		List<DNSRecord> goDaddyRecords = mxRecords.stream()
 				.map(mxRecordToGoDaddyFormat)
 				.collect(toList());
@@ -54,7 +55,8 @@ class GoDaddyDomainDnsClient implements DomainDnsOperationsClient {
 		Unirest
 				.put(format("%s/v1/domains/%s/records/MX", goDaddyBaseUrl, domainName))
 				.header("X-Shopper-Id", shopperIdSupplier.get())
-				.body(serializedRecords);
+				.body(serializedRecords)
+				.asJson();
 	}
 
 	@SneakyThrows

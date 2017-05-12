@@ -11,7 +11,7 @@ import com.github.dafutils.dns.records.TxtRecord;
  */
 public interface DomainDnsOperationsClient {
 
-	void configureDomainEmailRouting(String domainName, Set<MxRecord> mxRecords);
+	void configureDomainEmailRouting(String domainName, Set<? extends MxRecord> mxRecords);
 
 	void addTextRecord(String domainName, TxtRecord record);
 }
