@@ -67,7 +67,11 @@ lazy val javaProjectSettings = Seq(
   // Do not append Scala versions to the generated artifacts
   crossPaths := false,
   // This forbids including Scala related libraries into the dependency
-  autoScalaLibrary := false,
+  autoScalaLibrary := false
+)
+
+lazy val unitTestSettings = Seq (
+  libraryDependencies ++= unitTestDependencies,
   //Enable JUnit in the build 
   testOptions += Tests.Argument(TestFrameworks.JUnit, "-q", "-v")
 )
@@ -77,8 +81,8 @@ lazy val commonProjectSettings =
                projectMetadataSettings ++
                versionSettings ++
                publicationSettings ++
-               jacoco.settings :+ 
-               (libraryDependencies ++= unitTestDependencies)
+               jacoco.settings ++ 
+               unitTestSettings
 
 lazy val model = project
   .settings(
